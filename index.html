@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Finder with Book Trail</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Raleway&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background">
+    <div class="container">
+      <h1>Book Finder</h1>
+      <p class="instruction">Type a thought or a feeling. A book title destined for you will appear. Press the orb to see your answer.</p>
+
+      <div class="input-area">
+        <input type="text" id="keyword" placeholder="Type your word..." />
+        <button title="Reveal your book">🔮</button>
+      </div>
+
+      <div id="result"></div>
+
+      <!-- Image button link -->
+      <a href="https://diamondina09.github.io/BookQuiz/" target="_blank" class="image-button">
+        <img src="Untitled_Artwork 14.png" alt="Visit Site" />
+      </a>
+
+      <button id="toggle-music">🎵</button>
+    </div>
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="Library Sounds  Study Ambience  10 Minutes.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const button = document.querySelector("button");
+    const input = document.getElementById("keyword");
+    const resultDiv = document.getElementById("result");
+
+    document.addEventListener("mousemove", (e) => {
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      const floatingBook = document.createElement("div");
+      floatingBook.classList.add("floating-book");
+      floatingBook.innerHTML = "📚";
+      document.body.appendChild(floatingBook);
+      floatingBook.style.left = `${mouseX + 10}px`;
+      floatingBook.style.top = `${mouseY + 10}px`;
+      setTimeout(() => floatingBook.classList.add("fade"), 300);
+      setTimeout(() => floatingBook.remove(), 1500);
+    });
+
+    button.addEventListener("click", async () => {
+      const keyword = input.value.trim();
+      if (!keyword) {
+        resultDiv.innerHTML = "<p>Please type in a word first.</p>";
+        return;
+      }
+
+      const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(keyword)}&maxResults=10`;
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (!data.items || data.items.length === 0) {
+          resultDiv.innerHTML = "<p>No books found for that word. Try another.</p>";
+          return;
+        }
+
+        const book = data.items[Math.floor(Math.random() * data.items.length)];
+        const title = book.volumeInfo.title || "Untitled";
+        const quote = book.volumeInfo.description
+                        ? `"${book.volumeInfo.description.split('. ')[0]}."`
+                        : "(No description available.)";
+
+        resultDiv.innerHTML = `
+          <h2>${title}</h2>
+          <p>${quote}</p>
+        `;
+      } catch (error) {
+        resultDiv.innerHTML = "<p>Something went wrong. Try again later.</p>";
+        console.error(error);
+      }
+    });
+
+    const music = document.getElementById("bg-music");
+    const musicBtn = document.getElementById("toggle-music");
+
+    musicBtn.addEventListener("click", () => {
+      if (music.paused) {
+        music.play();
+        musicBtn.textContent = "🔊";
+      } else {
+        music.pause();
+        musicBtn.textContent = "🔇";
+      }
+    });
+  </script>
+</body>
+</html>

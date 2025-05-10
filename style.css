@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Raleway&display=swap');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Raleway', sans-serif;
+  color: #fdf6ff;
+  overflow: hidden;
+}
+
+.background {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: black;
+
+  background-image: 
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
+    radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px),
+    linear-gradient(-45deg, #120029, #28074b, #70288f, #9b0dbb);
+
+  background-size: 
+    550px 550px, 
+    350px 350px, 
+    250px 250px, 
+    150px 150px,
+    400% 400%;
+
+  background-position: 
+    0 0, 
+    40px 60px, 
+    130px 270px, 
+    70px 100px,
+    0% 50%;
+
+  animation: gradientFlow 15s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
+  background-color: rgba(20, 10, 30, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 0 30px #8c52ff99;
+  padding: 50px 40px;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: #ffdbff;
+}
+
+.instruction {
+  font-size: 1rem;
+  color: #cbb3f5;
+  margin-bottom: 30px;
+}
+
+.input-area {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+input {
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #321d4d;
+  color: #fff;
+  width: 220px;
+  box-shadow: inset 0 0 8px #a878ff44;
+}
+
+input::placeholder {
+  color: #cab1e6;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 10px #a878ff, inset 0 0 8px #a878ff44;
+  border-color: #a878ff;
+}
+
+button {
+  font-size: 1.6rem;
+  border: none;
+  border-radius: 50%;
+  background-color: #a878ff;
+  color: white;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #d6b3ff;
+  transform: scale(1.1);
+}
+
+#toggle-music {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  background-color: #32204d;
+  padding: 10px;
+  box-shadow: 0 0 8px #c79cff;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#toggle-music:hover {
+  transform: scale(1.1);
+  background-color: #47295f;
+}
+
+#result {
+  background-color: #2a1840;
+  border: 2px solid #a878ff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 0 15px #8c52ff88;
+  margin-top: 20px;
+}
+
+#result h2 {
+  font-family: 'Playfair Display', serif;
+  margin-top: 0;
+  font-size: 1.4rem;
+  color: #ffd6ff;
+}
+
+#result p {
+  font-style: italic;
+  color: #e5d2f9;
+}
+
+/* Floating book trail */
+.floating-book {
+  position: absolute;
+  font-size: 2em;
+  opacity: 0.8;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 1s ease-out;
+}
+
+.floating-book.fade {
+  opacity: 0;
+}
+
+/* Image link button */
+.image-button {
+  position: fixed;
+  bottom: 0; /* Placed at the bottom of the screen */
+  left: 50%;
+  transform: translateX(-50%); /* Centers the image horizontally */
+  z-index: 10;
+}
+
+.image-button img {
+  width: 200px; /* Adjust the size as needed */
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-button img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 600px) {
+  .image-button img {
+    width: 150px;
+  }
+}
+
